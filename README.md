@@ -27,12 +27,12 @@ var usersBuilder = new CsvBuilder({
 })
 // create virtual 'Firstname'
 .virtual('Firstname', function(obj) {
-	return obj.split(' ')[0];
+	return obj.name.split(' ')[0];
 })
 // virtual properties are treated like any propery,
 // if it is not defined in the headers, it still needs a constraint
 .virtual('lastname', function(obj) {
-	return obj.split(' ')[1];
+	return obj.name.split(' ')[1];
 });
 
 // From the `usersBuilder` instance we can now spawn readable or tranform streams.
