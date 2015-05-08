@@ -2,16 +2,25 @@
   "name": "csv-builder",
   "author": "Nick Pisacane <pisacanen@gmail.com> (http://nickpisacane.com)",
   "version": "0.0.1",
-  "description": "Create csv formated streams from Arrays of Objects",
+  "description": "Create csv formated streams from Arrays of Objects.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nindaff/CsvBuilder"
+  },
   "keywords": [
     "csv",
+    "array",
+    "stream",
     "array to csv",
     "object to csv",
-    "csv stream",
-    "csv"
+    "csv stream"
   ],
   "dependencies": {
     "lodash": "~3.8.0",
     "through": "~2.3.7"
+  },
+  "scripts": {
+    "test": "node ./test/main.test.js"
   }
 }
