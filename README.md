@@ -54,10 +54,10 @@ $ npm install csv-builder
 
 ## Usage
 ##### CsvBuilder([options])
+* headers String|Array Space separated headers, or array of headers (required)
 * delimiter String The value delimiter. Default ','
 * terminator String The line terminator. Default '\n'
 * mutate Boolean Mutate incoming objects when creating virtuals. Default true
-* headers String|Array Space separated headers, or array of headers
 * constraints Object {"header": "prop"}
 
 ## Methods
