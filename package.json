@@ -1,12 +1,12 @@
 {
   "name": "csv-builder",
   "author": "Nick Pisacane <pisacanen@gmail.com> (http://nickpisacane.com)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create csv formated streams from Arrays of Objects.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Nindaff/CsvBuilder"
+    "url": "https://github.com/nickpisacane/CsvBuilder"
   },
   "keywords": [
     "csv",
