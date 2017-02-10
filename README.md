@@ -2,7 +2,7 @@
 Create csv formated streams from Arrays of Objects. CsvBuilder is one of many Csv stream/generator implementations
 on npm. The goal of CsvBuilder is to create Schema's for csv output and let the consumer spawn as many streams
 as needed from a single instance to maintain a specific format. This means the user gets control of the headers, the
-order of the headers, how the headers correspond to consumed objects, virtual properties, value delimiters, and line 
+order of the headers, how the headers correspond to consumed objects, virtual properties, value delimiters, and line
 terminators.
 
 ## Getting Started
@@ -10,30 +10,37 @@ terminators.
 
 var CsvBuilder = require('csv-builder');
 
-// assuming we have an array of objects that's
-// in the format of {fullname: String, email: String, zip: Number}
-// but we need csv formated as such: Firstname, Lastname, Email
+// Assuming data takes the following form
+var data = [
+	name: 'Example User',
+	email: 'example@gmail.com',
+	meta: {
+		active: true
+	}
+]
 
 var usersBuilder = new CsvBuilder({
 	// define headers and order of headers
-	headers: 'Firstname Lastname Email',
+	headers: 'Firstname Lastname Email Active',
 	// define object to header correspondance
 	constraints: {
 		// Header: property
 		'Email': 'email'
 		// correspond with a virtual property
-		'Lastname': 'lastname'
+		'Lastname': 'lastname',
+		// Access a nested property
+		'Active': 'meta.active'
 	}
 })
-// create virtual 'Firstname'
-.virtual('Firstname', function(obj) {
-	return obj.name.split(' ')[0];
-})
-// virtual properties are treated like any propery,
-// if it is not defined in the headers, it still needs a constraint
-.virtual('lastname', function(obj) {
-	return obj.name.split(' ')[1];
-});
+	// create virtual 'Firstname'
+	.virtual('Firstname', function(obj) {
+		return obj.name.split(' ')[0];
+	})
+	// virtual properties are treated like any propery,
+	// if it is not defined in the headers, it still needs a constraint
+	.virtual('lastname', function(obj) {
+		return obj.name.split(' ')[1];
+	});
 
 // From the `usersBuilder` instance we can now spawn readable or tranform streams.
 
@@ -78,7 +85,7 @@ set the virtual property will be omitted.
 
 ##### CsvBuilder#createReadStream(payload)
 Create's a readable stream and consumes the payload.
-* payload Array<Object> 
+* payload Array<Object>
 
 ##### CsvBuilder#createTransformStream()
 Create's a transform stream. The stream expects either Objects or JSON.
