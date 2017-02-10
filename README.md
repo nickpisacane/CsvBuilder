@@ -1,4 +1,6 @@
 # Csvbuilder
+![travis](https://travis-ci.org/nickpisacane/CsvBuilder.svg?branch=master)
+
 Create csv formated streams from Arrays of Objects. CsvBuilder is one of many Csv stream/generator implementations
 on npm. The goal of CsvBuilder is to create Schema's for csv output and let the consumer spawn as many streams
 as needed from a single instance to maintain a specific format. This means the user gets control of the headers, the
