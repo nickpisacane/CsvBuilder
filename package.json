@@ -1,7 +1,7 @@
 {
   "name": "csv-builder",
   "author": "Nick Pisacane <pisacanen@gmail.com> (http://nickpisacane.com)",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create csv formated streams from Arrays of Objects.",
   "license": "MIT",
   "repository": {
