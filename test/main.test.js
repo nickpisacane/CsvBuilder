@@ -7,6 +7,7 @@ var CsvBuilder = require('../lib/csvBuilder');
 var fs = require('fs');
 var assert = require('assert');
 var Stream = require('stream');
+var TestStream = require('testable-stream')
 
 // test data
 var testData = require('./data.json');
@@ -80,5 +81,40 @@ describe('CsvBuilder', function() {
         done();
       });
   });
+
+  it('supports nested properties', function (done) {
+    var data = [
+      {
+        name: 'Test',
+        age: 48,
+        email: 'test@gmail.com',
+        meta: {
+          active: true
+        }
+      }
+    ]
+
+    var expected = [
+      'Name,Age,Email,Active',
+      'Test,48,test@gmail.com,true\n'
+    ].join('\n')
+
+    var builder = new CsvBuilder({
+      headers: 'Name Age Email Active',
+      constraints: {
+        Name: 'name',
+        Age: 'age',
+        Email: 'email',
+        Active: 'meta.active'
+      }
+    })
+
+    builder.createReadStream(data)
+      .pipe(TestStream())
+      .on('testable', function (data) {
+        assert.equal(data.toString(), expected)
+        done()
+      })
+  })
 
 });
