@@ -2,6 +2,7 @@
  * Module Dependencies
  */
 
+var path = require('path');
 var CsvBuilder = require('../lib/csvBuilder');
 var fs = require('fs');
 var assert = require('assert');
@@ -10,7 +11,7 @@ var Stream = require('stream');
 // test data
 var testData = require('./data.json');
 // expected csv value
-var expected = fs.readFileSync('./expected.csv');
+var expected = fs.readFileSync(path.join(__dirname, 'expected.csv'));
 
 // test instance
 var Test = new CsvBuilder({
