@@ -17,8 +17,8 @@
     "csv stream"
   ],
   "dependencies": {
-    "lodash": "~3.8.0",
-    "through": "~2.3.7"
+    "lodash.get": "^4.4.2",
+    "lodash.pick": "^4.4.0"
   },
   "scripts": {
     "test": "mocha test/**/*.test.js"
