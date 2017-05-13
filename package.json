@@ -21,10 +21,17 @@
     "lodash.pick": "^4.4.0"
   },
   "scripts": {
-    "test": "mocha test/**/*.test.js"
+    "lint": "standard",
+    "test": "npm run lint && mocha test/**/*.test.js"
   },
   "devDependencies": {
-    "mocha": "^3.2.0",
-    "testable-stream": "0.0.1"
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "standard": "^10.0.2"
+  },
+  "standard": {
+    "ignore": [
+      "test"
+    ]
   }
 }
