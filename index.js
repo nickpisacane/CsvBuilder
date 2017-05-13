@@ -1,1 +1,1 @@
-module.exports = require('./lib/csvBuilder');
+module.exports = require('./lib/CsvBuilder')
