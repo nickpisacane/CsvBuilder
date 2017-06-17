@@ -1,25 +1,36 @@
 # Csvbuilder
 ![travis](https://travis-ci.org/nickpisacane/CsvBuilder.svg?branch=master)
 
-Create csv formated streams from Arrays of Objects. CsvBuilder is one of many Csv stream/generator implementations
-on npm. The goal of CsvBuilder is to create Schema's for csv output and let the consumer spawn as many streams
-as needed from a single instance to maintain a specific format. This means the user gets control of the headers, the
-order of the headers, how the headers correspond to consumed objects, virtual properties, value delimiters, and line
-terminators.
+Easily encode complex JSON objects to CSV with CsvBuilder's schema-like API.
 
 ## Getting Started
 ```js
 
-var CsvBuilder = require('csv-builder');
+const CsvBuilder = require('csv-builder')
 
-// Assuming data takes the following form
-var data = [
-	name: 'Example User',
-	email: 'example@gmail.com',
-	meta: {
-		active: true
+const data = [
+	{
+		name: 'Foo Bar',
+		meta: {
+			active: true,
+			roles: [
+				'user',
+				'admin'
+			]
+		}
 	}
 ]
+
+const builder = new CsvBuilder({
+	headers: ['Firstname', 'Lastname', 'Role 1', 'Role 2', 'Active'],
+	alias: {
+		'Role 1': 'meta.roles[0]',
+		'Role 2': 'meta.roles[1]',
+		'Active': 'meta.active'
+	}
+})
+	.virtual('Firstname', user => user.name.split(' ')[0])
+	.virtual('Lastname', user => user.name.split(' ')[1])
 
 var usersBuilder = new CsvBuilder({
 	// define headers and order of headers
