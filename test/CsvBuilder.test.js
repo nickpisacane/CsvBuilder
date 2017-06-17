@@ -73,6 +73,28 @@ describe('CsvBuilder', () => {
       const row = _builder.getRow(data)
       expect(row).to.equal(`"foo ""bar"" bang|42","bang,baz","42","bazz"\n`)
     })
+
+    it('manual encoding', () => {
+      const builder = new CsvBuilder({
+        headers: 'foo bar'
+      })
+      const data = [
+        {
+          foo: '42',
+          bar: 'bang'
+        },
+        {
+          foo: '43',
+          bar: 'baz'
+        }
+      ]
+
+      let csv = builder.getHeaders()
+      data.forEach(item => {
+        csv += builder.getRow(item)
+      })
+      expect(csv).to.equal(`"foo","bar"\n"42","bang"\n"43","baz"\n`)
+    })
   })
 
   describe('Streaming', () => {
