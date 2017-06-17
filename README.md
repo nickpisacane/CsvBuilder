@@ -35,12 +35,22 @@ const builder = new CsvBuilder({
   }
 })
 
+// Pipe through a transform stream
 getObjectStream()
-  .pipe(usersBuilder.createTransformStream())
-  .pipe(fs.createWriteStream('output.csv'));
+  .pipe(builder.createTransformStream())
+  .pipe(fs.createWriteStream('output.csv'))
 
-usersBuilder.createReadStream(payload)
-  .pipe(fs.createWriteStream('output.csv'));
+// Create a read stream from a static payload
+builder.createReadStream(data)
+  .pipe(fs.createWriteStream('output.csv'))
+
+// Roll your own
+let csv = ''
+csv += builder.getHeaders()
+data.forEach(item => {
+  csv += builder.getRow(item)
+})
+fs.writeFileSync('output.csv', csv)
 ```
 
 ## Installation
