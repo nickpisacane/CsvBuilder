@@ -22,12 +22,14 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "npm run lint && mocha test/**/*.test.js"
+    "test": "npm run lint && mocha test/**/*.test.js",
+    "test:watch": "watch-run -i -p 'lib/**/*.js,test/**/*.js' npm run test"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.3.0",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
+    "watch-run": "^1.2.5"
   },
   "standard": {
     "ignore": [
