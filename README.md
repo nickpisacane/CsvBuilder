@@ -32,29 +32,6 @@ const builder = new CsvBuilder({
 	.virtual('Firstname', user => user.name.split(' ')[0])
 	.virtual('Lastname', user => user.name.split(' ')[1])
 
-var usersBuilder = new CsvBuilder({
-	// define headers and order of headers
-	headers: 'Firstname Lastname Email Active',
-	// define object to header correspondance
-	constraints: {
-		// Header: property
-		'Email': 'email'
-		// correspond with a virtual property
-		'Lastname': 'lastname',
-		// Access a nested property
-		'Active': 'meta.active'
-	}
-})
-	// create virtual 'Firstname'
-	.virtual('Firstname', function(obj) {
-		return obj.name.split(' ')[0];
-	})
-	// virtual properties are treated like any propery,
-	// if it is not defined in the headers, it still needs a constraint
-	.virtual('lastname', function(obj) {
-		return obj.name.split(' ')[1];
-	});
-
 // From the `usersBuilder` instance we can now spawn readable or tranform streams.
 
 // pipe into a newly created duplex
@@ -69,36 +46,46 @@ usersBuilder.createReadStream(payload)
 
 ## Installation
 ```bash
-$ npm install csv-builder
+$ npm i -s csv-builder
+# or
+$ yarn add csv-builder
 ```
 
 ## Usage
 ##### CsvBuilder([options])
-* headers String|Array Space separated headers, or array of headers **(required)**
-* delimiter String The value delimiter. Default ','
-* terminator String The line terminator. Default '\n'
-* mutate Boolean Mutate incoming objects when creating virtuals. Default true
-* constraints Object {"header": "prop"}
+* `headers` *String|Array<String>* Space separated headers, or array of headers **(required)**
+* `delimiter` *String* The column delimiter. Default `','`
+* `terminator` *String* The row terminator. Default `'\n'`
+* `quoted` *Boolean* Quote columns? Default `true`
+* `alias` *Object* An object in the format of { "csv header": "object prop" }, `object prop` will be aliased to `csv header`. Default `{}`
 
 ## Methods
-##### CsvBuilder#headers(headers)
-* headers String|Array Space separated headers, or array of headers
 
-##### CsvBuilder#set(header, prop)
+##### CsvBuilder#createReadStream(payload): Stream.Readable
+Creates a readable stream and consumes the payload.
+* `payload` *Array<Object>* Incoming data.
+
+##### CsvBuilder#createTransformStream(): Stream.Transform
+Creates a transform stream. The stream expects either Objects or JSON.
+
+##### CsvBuilder#headers(headers): this
+* `headers` *String|Array* Space separated headers, or array of headers
+
+##### CsvBuilder#alias(header, prop): this
 Set single or multiple contraints. If `header` is an object, it will extend any existing constraints, not replace.
-* header String|Object Either object {"header": "property"} Or a string "Header"
-* prop String Property to correspond to header, omit if using object.
+* `header` *String|Object* Either object {"header": "property"} Or a string "Header"
+* `prop` *String|undefined* Property to correspond to header, omit if using object.
 
-##### CsvBuilder#virtual(prop, fn)
+##### CsvBuilder#virtual(prop, fn): this
 Create a virtual property. Virtual properties are treated the same as normal
-properties, so if no header matches the virtual property name, or no constraint is
-set the virtual property will be omitted.
-* prop String Virtual property name
-* fn Function Returns virtual value, takes the object to be created/mutated as the only argument.
+properties. If there is no corresponding header or alias, the virtual will not be present in resulting CSV.
+* `prop` *String* Virtual property name
+* `fn` *(item: any) => any* Where `item` is an element from the incoming data, and the return value is the corresponding value for the virtualized property.
 
-##### CsvBuilder#createReadStream(payload)
-Create's a readable stream and consumes the payload.
-* payload Array<Object>
+##### CsvBuilder#getHeaders(): String
+The headers in CSV format
 
-##### CsvBuilder#createTransformStream()
-Create's a transform stream. The stream expects either Objects or JSON.
+##### CsvBuilder#getRow(item): String
+Returns the CSV formated row for a given `item`.
+*  `item` *Object* A n item matching the "schema".
+
