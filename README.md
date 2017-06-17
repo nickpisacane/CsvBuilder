@@ -9,39 +9,38 @@ Easily encode complex JSON objects to CSV with CsvBuilder's schema-like API.
 const CsvBuilder = require('csv-builder')
 
 const data = [
-	{
-		name: 'Foo Bar',
-		meta: {
-			active: true,
-			roles: [
-				'user',
-				'admin'
-			]
-		}
-	}
+  {
+    name: 'Foo Bar',
+    meta: {
+      active: true,
+      roles: [
+        'user',
+        'admin'
+      ]
+    }
+  }
 ]
 
 const builder = new CsvBuilder({
-	headers: ['Firstname', 'Lastname', 'Role 1', 'Role 2', 'Active'],
-	alias: {
-		'Role 1': 'meta.roles[0]',
-		'Role 2': 'meta.roles[1]',
-		'Active': 'meta.active'
-	}
+  headers: ['Firstname', 'Lastname', 'Role 1', 'Role 2', 'Active'],
+  alias: {
+    'Role 1': 'meta.roles[0]',
+    'Role 2': 'meta.roles[1]',
+    'Active': 'meta.active'
+  }
 })
-	.virtual('Firstname', user => user.name.split(' ')[0])
-	.virtual('Lastname', user => user.name.split(' ')[1])
+  .virtual('Firstname', user => user.name.split(' ')[0])
+  .virtual('Lastname', user => user.name.split(' ')[1])
+    'Active': 'meta.active'
+  }
+})
 
-// From the `usersBuilder` instance we can now spawn readable or tranform streams.
+getObjectStream()
+  .pipe(usersBuilder.createTransformStream())
+  .pipe(fs.createWriteStream('output.csv'));
 
-// pipe into a newly created duplex
-Model.find().stream()
-	.pipe(usersBuilder.createTransformStream())
-	.pipe(fs.createWriteStream('output.csv'));
-
-// Create a readable stream from an Array<Object> payload
 usersBuilder.createReadStream(payload)
-	.pipe(fs.createWriteStream('output.csv'));
+  .pipe(fs.createWriteStream('output.csv'));
 ```
 
 ## Installation
@@ -61,31 +60,31 @@ $ yarn add csv-builder
 
 ## Methods
 
-##### CsvBuilder#createReadStream(payload): Stream.Readable
+##### CsvBuilder#`createReadStream`(payload): *Stream.Readable*
 Creates a readable stream and consumes the payload.
-* `payload` *Array<Object>* Incoming data.
+* `payload` *Array\<Object\>* Incoming data.
 
-##### CsvBuilder#createTransformStream(): Stream.Transform
+##### CsvBuilder#`createTransformStream`(): *Stream.Transform*
 Creates a transform stream. The stream expects either Objects or JSON.
 
-##### CsvBuilder#headers(headers): this
+##### CsvBuilder#`headers`(headers): *this*
 * `headers` *String|Array* Space separated headers, or array of headers
 
-##### CsvBuilder#alias(header, prop): this
+##### CsvBuilder#`alias`(header, prop): *this*
 Set single or multiple contraints. If `header` is an object, it will extend any existing constraints, not replace.
 * `header` *String|Object* Either object {"header": "property"} Or a string "Header"
 * `prop` *String|undefined* Property to correspond to header, omit if using object.
 
-##### CsvBuilder#virtual(prop, fn): this
+##### CsvBuilder#`virtual`(prop, fn): *this*
 Create a virtual property. Virtual properties are treated the same as normal
 properties. If there is no corresponding header or alias, the virtual will not be present in resulting CSV.
 * `prop` *String* Virtual property name
 * `fn` *(item: any) => any* Where `item` is an element from the incoming data, and the return value is the corresponding value for the virtualized property.
 
-##### CsvBuilder#getHeaders(): String
+##### CsvBuilder#`getHeaders`(): *String*
 The headers in CSV format
 
-##### CsvBuilder#getRow(item): String
+##### CsvBuilder#`getRow`(item): *String*
 Returns the CSV formated row for a given `item`.
 *  `item` *Object* A n item matching the "schema".
 
