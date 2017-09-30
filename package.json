@@ -1,8 +1,8 @@
 {
   "name": "csv-builder",
-  "author": "Nick Pisacane <pisacanen@gmail.com> (http://nickpisacane.com)",
+  "author": "Nick Pisacane <pisacanen@gmail.com>",
   "version": "1.0.0",
-  "description": "Create csv formated streams from Arrays of Objects.",
+  "description": "Easily encode complex JSON objects to CSV with CsvBuilder's schema-like API",
   "license": "MIT",
   "repository": {
     "type": "git",
