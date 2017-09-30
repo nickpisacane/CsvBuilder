@@ -1,7 +1,7 @@
 {
   "name": "csv-builder",
   "author": "Nick Pisacane <pisacanen@gmail.com> (http://nickpisacane.com)",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Create csv formated streams from Arrays of Objects.",
   "license": "MIT",
   "repository": {
@@ -10,11 +10,11 @@
   },
   "keywords": [
     "csv",
-    "array",
-    "stream",
-    "array to csv",
+    "csv encoder",
+    "json to csv",
     "object to csv",
-    "csv stream"
+    "csv stream",
+    "csv exporter"
   ],
   "dependencies": {
     "lodash.get": "^4.4.2",
