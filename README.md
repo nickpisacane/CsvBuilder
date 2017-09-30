@@ -4,11 +4,11 @@
 Easily encode complex JSON objects to CSV with CsvBuilder's schema-like API.
 
 # Table Of Contents
-* [Usage](#Usage)
-* [New Features](#New-Features)
-* [Installation](#Installation)
-* [API](#API)
-* [Migration To 1.0.0](#Migration-to-1.0.0)
+* [Usage](#usage)
+* [New Features](#new-features)
+* [Installation](#installation)
+* [API](#api)
+* [Migration To 1.0.0](#migration-to-100)
 
 # Usage
 ```js
