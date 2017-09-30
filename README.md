@@ -3,7 +3,14 @@
 
 Easily encode complex JSON objects to CSV with CsvBuilder's schema-like API.
 
-## Getting Started
+# Table Of Contents
+* [Usage](#Usage)
+* [New Features](#New-Features)
+* [Installation](#Installation)
+* [API](#API)
+* [Migration To 1.0.0](#Migration-to-1.0.0)
+
+# Usage
 ```js
 
 const CsvBuilder = require('csv-builder')
@@ -31,20 +38,25 @@ const builder = new CsvBuilder({
 })
   .virtual('Firstname', user => user.name.split(' ')[0])
   .virtual('Lastname', user => user.name.split(' ')[1])
-    'Active': 'meta.active'
-  }
-})
 
-// Pipe through a transform stream
+/* Each of the following produces the following CSV contents:
+
+"Firstname","Lastname","Role 1","Role 2","Active"
+"Foo","Bar","user","admin","true"
+
+*/
+
+
+// (1) Create from a Stream of objects (like a database)
 getObjectStream()
   .pipe(builder.createTransformStream())
   .pipe(fs.createWriteStream('output.csv'))
 
-// Create a read stream from a static payload
+// (2) Create from an existing payload (`data` is an array of objects)
 builder.createReadStream(data)
   .pipe(fs.createWriteStream('output.csv'))
 
-// Roll your own
+// (3) Roll your own
 let csv = ''
 csv += builder.getHeaders()
 data.forEach(item => {
@@ -53,14 +65,19 @@ data.forEach(item => {
 fs.writeFileSync('output.csv', csv)
 ```
 
-## Installation
+# Installation
 ```bash
 $ npm i -s csv-builder
 # or
 $ yarn add csv-builder
 ```
 
-## Usage
+# New Features
+* More cohesive API
+* Expanded API to support non-stream outputs, i.e. building a CSV string row-by-row with the `getHeaders()` and `getRow(object)` methods respectively.
+* Better CSV encoding (proper quoting by default)
+
+# API
 ##### CsvBuilder([options])
 * `headers` *String|Array<String>* Space separated headers, or array of headers **(required)**
 * `delimiter` *String* The column delimiter. Default `','`
@@ -98,3 +115,6 @@ The headers in CSV format
 Returns the CSV formated row for a given `item`.
 *  `item` *Object* A n item matching the "schema".
 
+# Migration to 1.0.0
+* `constraints` attribute in options (for constructor) is deprecated, use `alias` instead.
+* `set(prop, value)` method is deprecated, use `alias(prop, value)` instead.
