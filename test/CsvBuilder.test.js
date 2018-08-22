@@ -114,7 +114,7 @@ describe('CsvBuilder', () => {
         bang: 21
       },
       {
-        foo: 'biz',
+        foo: 0,
         bar: void 0,
         bang: null
       }
@@ -124,7 +124,7 @@ describe('CsvBuilder', () => {
       `"foo","bar","bang"\n`,
       `"""bar""","bang,baz","42"\n`,
       `"bang","bang,""baz""","21"\n`,
-      `"biz","",""\n`
+      `"0","",""\n`
     ].join('')
 
     it('transform stream (Object Mode)', () => {
