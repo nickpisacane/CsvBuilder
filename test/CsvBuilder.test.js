@@ -112,13 +112,19 @@ describe('CsvBuilder', () => {
         foo: 'bang',
         bar: 'bang,"baz"',
         bang: 21
+      },
+      {
+        foo: 0,
+        bar: void 0,
+        bang: null
       }
     ]
     const dataJSON = data.map(item => JSON.stringify(item))
     const expected = [
       `"foo","bar","bang"\n`,
       `"""bar""","bang,baz","42"\n`,
-      `"bang","bang,""baz""","21"\n`
+      `"bang","bang,""baz""","21"\n`,
+      `"0","",""\n`
     ].join('')
 
     it('transform stream (Object Mode)', () => {
