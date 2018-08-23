@@ -27,8 +27,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.3.0",
-    "standard": "^10.0.2",
+    "mocha": "^3.5.3",
+    "standard": "^10.0.3",
     "watch-run": "^1.2.5"
   },
   "standard": {
